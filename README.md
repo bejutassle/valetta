@@ -1,7 +1,7 @@
 # Foursquare is Valetta
 run commands
 
-"composer install"
-"bower install"
-"npm install"
-"gulp"
+"composer install"<br>
+"bower install"<br>
+"npm install"<br>
+"gulp"<br>
