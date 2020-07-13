@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://$_SERVER['HTTP_HOST']$_SERVER['REQUEST_URI']'),
 
     'asset_url' => env('ASSET_URL', null),
 
