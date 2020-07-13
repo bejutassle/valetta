@@ -2,13 +2,6 @@
 run commands
 
 "composer install"
-
 "bower install"
-
+"npm install"
 "gulp"
-=======
-# valetta
-Foursquare is valetta
-
-"composer install"
-"bower install"
