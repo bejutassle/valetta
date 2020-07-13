@@ -1,0 +1,17 @@
+{
+  "name": "Foursquare for Valletta",
+  "description": "Listing system of the city of Valletta with Foursquare API",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "vendor/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.5.1",
+    "bootstrap": "^4.5.0",
+    "fontawesome": "^5.13.1",
+    "css-hamburgers": "^1.1.3"
+  }
+}
