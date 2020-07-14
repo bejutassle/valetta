@@ -5,7 +5,7 @@
 		   <div class="container">
 			   <div class="row justify-content-between">
 				   <div class="col-lg-3 col-md-4 col-10">
-					   <h1><strong>145</strong> result for "All categories"</h1>
+					   <h1>Result for "<span id="cat_name">@if(request()->get('section')) {{strtoupper(request()->get('section'))}} @else 'All' @endif</span> categories"</h1>
 				   </div>
 			   </div>
 			   <!-- /row -->
@@ -58,7 +58,9 @@ $(document).ready(function() {
 		}
 
 		window.history.pushState('', '', $url);
-		getContent();
+		$('[name^="counter"]').val(0);
+		$('#cat_name').text($val.toUpperCase());
+		getContent(true);
 	});
 
 	$(document).on('change', 'input[type="checkbox"][name^="query"]', function(e) {
@@ -85,7 +87,8 @@ $(document).ready(function() {
 		}
 
 		window.history.pushState('', '', $url);
-		getContent();
+		$('[name^="counter"]').val(0);
+		getContent(true);
 
 		$('[name="section"]').prop('checked', false);
 		$(':checkbox[name=query][value!="'+$val+'"]').prop('checked', false);
@@ -94,12 +97,11 @@ $(document).ready(function() {
 		$(':checkbox[name=query][value="'+$parent+'"]').prop('checked', this.checked);
 	});
 
-	function getContent(){
+	function getContent(reset){
 		$params = new URLSearchParams(window.location.search);
 		$offset = $('[name^="counter"]').val();
 		$limit = 4;
 		$('[role="status"]').removeAttr('style');
-		$('#aside_list').empty();
 
 		$.get('show', {
 			query: $params.get('query'), 
@@ -109,21 +111,24 @@ $(document).ready(function() {
 		}, function(data) {
 		}).done(function(data) {
 		   	$('[role="status"]').attr('style', 'display: none !important;');
-		   	$(data).insertBefore('#aside_list');
+		   	if(reset){
+				$('#aside_list').empty().append(data);
+		   	}else{
+		   		$('#aside_list').append(data);
+		   	}
 
 			var waypoints = $('#read_more').waypoint({
 			  handler: function(direction) {
 			    if(direction == 'down'){
 			    	$('[name^="counter"]').val(parseFloat(parseInt($('[name^="counter"]').val()) + parseInt(4)));
 			    	getContent();
-			    	console.log($('[name^="counter"]').val());
 			    }
 			  }
 			});
 		});
 	}
 
-	getContent();
+	getContent(false);
 
 });
 </script>
