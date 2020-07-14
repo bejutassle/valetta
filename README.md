@@ -11,6 +11,7 @@
 3. "npm install"<br>
 4. "gulp"<br>
 
+Fourquare API configuration<br>
 *change the following line values in the .env file*<br>
 **F_CLIENT_ID**={client_id}<br>
 **F_CLIENT_SECRET**={client_secret}<br><br>
