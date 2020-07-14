@@ -49,9 +49,9 @@
 					</a>
 					<div class="collapse show" id="collapse_ft_3">
 						<ul class="contacts">
-							<li>97845 Lorem<br>Ipsum - IP</li>
-							<li>+9000000000</li>
-							<li><a href="#">info@domain.com</a></li>
+							<li><i class="fa fa-home"></i> 97845 Lorem Ipsum - IP</li>
+							<li><i class="fa fa-phone"></i>+9000000000</li>
+							<li><i class="fa fa-envelope"></i><a href="#">info@domain.com</a></li>
 						</ul>
 					</div>
 				</div>
@@ -76,11 +76,11 @@
 						<div class="follow_us">
 							<h5>Follow Us</h5>
 							<ul>
-								<li><a href="#"><i class="ti-facebook"></i></a></li>
-								<li><a href="#"><i class="ti-twitter-alt"></i></a></li>
-								<li><a href="#"><i class="ti-google"></i></a></li>
-								<li><a href="#"><i class="ti-pinterest"></i></a></li>
-								<li><a href="#"><i class="ti-instagram"></i></a></li>
+								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+								<li><a href="#"><i class="fa fa-google"></i></a></li>
+								<li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+								<li><a href="#"><i class="fa fa-instagram"></i></a></li>
 							</ul>
 						</div>
 					</div>
@@ -129,5 +129,32 @@
 <div id="toTop"></div><!-- Back to top button -->
 
 <script type="text/javascript" src="{{ asset('assets/js/main.min.js') }}"></script>
+<script>
+$(document).ready(function() {
+	// Sticky nav
+	$(window).on('scroll', function () {
+		if ($(this).scrollTop() > 1) {
+			$('.header').addClass("sticky");
+		} else {
+			$('.header').removeClass("sticky");
+		}
+	});
+	//Scroll to top
+	$(window).on('scroll', function () {
+		'use strict';
+		if ($(this).scrollTop() != 0) {
+			$('#toTop').fadeIn();
+		} else {
+			$('#toTop').fadeOut();
+		}
+	});
+	$('#toTop').on('click', function () {
+		$('body,html').animate({
+			scrollTop: 0
+		}, 500);
+	});
+});
+</script>
+@yield('scripts')
 </body>
 </html>

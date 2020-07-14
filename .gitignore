@@ -3,10 +3,8 @@
 /public/storage
 /public/assets/css
 /public/assets/js
-/public/assets/fonts
 /storage/*.key
 /vendor
-.env
 .env.backup
 .phpunit.result.cache
 Homestead.json
