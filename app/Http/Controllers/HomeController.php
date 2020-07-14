@@ -43,10 +43,14 @@ class HomeController extends BaseController
     public function show(Request $request)
     {   
         $explorers = $this->explore($request);
-        $warning = (!empty($explorers['warning'])) ? $explorers['warning'] : '';
+        $warning = (!empty($explorers['warning']['text'])) ? $explorers['warning']['text'] : '';
         $explorers = array_column($explorers['groups'][0]['items'], 'venue');
 
-        return view('aside/list', compact('explorers', 'warning'));
+        return response()->json([
+            'view' => view('aside/list', compact('explorers', 'warning'))->render(),
+            'error' => view('error/no-result', compact('warning'))->render(),
+            'status' => (!empty($explorers)) ? true : false,
+        ]);
     }
 
     public function categories($url = 'venues/categories')

@@ -5,7 +5,7 @@
 		   <div class="container">
 			   <div class="row justify-content-between">
 				   <div class="col-lg-3 col-md-4 col-10">
-					   <h1>Result for "<span id="cat_name">@if(request()->get('section')) {{strtoupper(request()->get('section'))}} @else 'All' @endif</span> categories"</h1>
+					   <h1>Result for "<span id="cat_name">@if(request()->get('section')) {{strtoupper(request()->get('section'))}} @else All @endif</span> categories "</h1>
 				   </div>
 			   </div>
 			   <!-- /row -->
@@ -95,12 +95,16 @@ $(document).ready(function() {
 		$(':checkbox[name=query][value="'+$val+'"]').prop('checked', this.checked);
 		$(':checkbox[name=query][value="'+$main+'"]').prop('checked', this.checked);
 		$(':checkbox[name=query][value="'+$parent+'"]').prop('checked', this.checked);
+		$('body,html').animate({
+			scrollTop: 0
+		}, 500);
 	});
 
 	function getContent(reset){
 		$params = new URLSearchParams(window.location.search);
 		$offset = $('[name^="counter"]').val();
 		$limit = 4;
+		$error_lenght = $('div#aside_list').find('.box_topic').length;
 		$('[role="status"]').removeAttr('style');
 
 		$.get('show', {
@@ -111,17 +115,23 @@ $(document).ready(function() {
 		}, function(data) {
 		}).done(function(data) {
 		   	$('[role="status"]').attr('style', 'display: none !important;');
-		   	if(reset){
-				$('#aside_list').empty().append(data);
+
+		   	if(data.status == true && reset == true){
+				$('#aside_list').empty().append(data.view);
+		   	}else if(data.status == true && reset == false){
+		   		$('#aside_list').append(data.view);
+		   	}else if(data.status == false){
+		   		$('div#aside_list').find('.box_topic').remove();
+		   		$('#aside_list').append(data.error);
 		   	}else{
-		   		$('#aside_list').append(data);
+
 		   	}
 
 			var waypoints = $('#read_more').waypoint({
 			  handler: function(direction) {
 			    if(direction == 'down'){
 			    	$('[name^="counter"]').val(parseFloat(parseInt($('[name^="counter"]').val()) + parseInt(4)));
-			    	getContent();
+			    	getContent(false);
 			    }
 			  }
 			});

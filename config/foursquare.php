@@ -33,6 +33,6 @@ return [
     |
     */
 
-    'api_url' => env('F_API_URL'),
+    'api_url' => env('F_API_URL', 'https://api.foursquare.com/v2/'),
 
 ];

@@ -17,13 +17,6 @@
 			</div>
 			<!-- /review_listing grid -->
 		@empty
-		<div class="col-md-12">
-			<a class="box_topic" role="button">
-				<i class="fa fa-warning"></i>
-				<h3>Opps!</h3>
-				<p>{{ $warning['text'] }}</p>
-			</a>
-		</div>
     	@endforelse
     </div>
     <!-- /row -->
