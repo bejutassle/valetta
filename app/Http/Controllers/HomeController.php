@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
 class HomeController extends BaseController
@@ -19,7 +20,7 @@ class HomeController extends BaseController
     {   
         $this->http = $client = new Client([
             'base_uri' => env('F_API_URL'),
-            'timeout'  => 2.0,
+            'timeout'  => 5.0,
             'verify' => false
         ]);
 
@@ -31,7 +32,7 @@ class HomeController extends BaseController
         $this->near = 'valletta';
     }
 
-    public function index()
+    public function index(Request $request)
     {	
         $categories = $this->categories();
         $sections = $this->section();
@@ -39,9 +40,9 @@ class HomeController extends BaseController
     	return view('pages/home', compact('categories', 'sections'));
     }
 
-    public function show($query = '', $section = '')
+    public function show(Request $request)
     {   
-        $explorers = $this->explore($query, $section);
+        $explorers = $this->explore($request);
         $warning = (!empty($explorers['warning'])) ? $explorers['warning'] : '';
         $explorers = array_column($explorers['groups'][0]['items'], 'venue');
 
@@ -69,16 +70,17 @@ class HomeController extends BaseController
         return $body['response']['categories'];
     }
 
-    public function explore($query = '', $section = '', $url = 'venues/explore')
+    public function explore($request, $url = 'venues/explore')
     {
 
        $params['client_id'] = env('F_CLIENT_ID');
        $params['client_secret'] = env('F_CLIENT_SECRET');
        $params['v'] = date('Ymd');
        $params['near'] = $this->near;
-       $params['venuePhotos'] = 1;
-       ($section != 'null' ? $params['section'] = $section : '');
-       ($query != 'null' ? $params['query'] = $query : '');
+       $params['offset'] = (!empty($request->query('offset'))) ? $request->query('offset') : 0;
+       $params['limit'] = (!empty($request->query('limit'))) ? $request->query('limit') : 4;
+       ($request->query('section') != 'null' ? $params['section'] = $request->query('section') : '');
+       ($request->query('query') != 'null' ? $params['query'] = $request->query('query') : '');
 
 
        $response = $this->http->request('GET', $url, [

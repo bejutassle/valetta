@@ -18,12 +18,15 @@
 			<div class="row">
 				@include('aside.filter')
 				<div class="col-lg-9">
+					<input type="hidden" name="counter" value="0">
+			    	<div id="aside_list">
+			    	</div>
+					<hr id="read_more">
 					<div class="d-flex justify-content-center" role="status">
 						<div class="spinner-grow text-primary text-center">
 						  <span class="sr-only">Loading...</span>
 						</div>
 					</div>
-					<div id="aside_list"></div>
 				</div>
 				<!-- /col -->
 			</div>		
@@ -93,17 +96,35 @@ $(document).ready(function() {
 
 	function getContent(){
 		$params = new URLSearchParams(window.location.search);
+		$offset = $('[name^="counter"]').val();
+		$limit = 4;
 		$('[role="status"]').removeAttr('style');
 		$('#aside_list').empty();
 
-			$.get($params.get('query')+'/'+$params.get('section'), function(data) {
-			}).done(function(data) {
-			   	$('[role="status"]').attr('style', 'display: none !important;');
-				$('#aside_list').html(data);
+		$.get('show', {
+			query: $params.get('query'), 
+			section: $params.get('section'), 
+			offset: $offset, 
+			limit: $limit
+		}, function(data) {
+		}).done(function(data) {
+		   	$('[role="status"]').attr('style', 'display: none !important;');
+		   	$(data).insertBefore('#aside_list');
+
+			var waypoints = $('#read_more').waypoint({
+			  handler: function(direction) {
+			    if(direction == 'down'){
+			    	$('[name^="counter"]').val(parseFloat(parseInt($('[name^="counter"]').val()) + parseInt(4)));
+			    	getContent();
+			    	console.log($('[name^="counter"]').val());
+			    }
+			  }
 			});
+		});
 	}
 
 	getContent();
+
 });
 </script>
 @stop

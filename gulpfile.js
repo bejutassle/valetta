@@ -12,7 +12,8 @@ const assets = {
     scripts: {
         files: [
             'vendor/bower_components/jquery/dist/jquery.js',
-            'vendor/bower_components/bootstrap/dist/js/bootstrap.js'
+            'vendor/bower_components/bootstrap/dist/js/bootstrap.js',
+            'vendor/bower_components/\waypoints/lib/jquery.waypoints.js',
         ],
         dest: 'public/assets/js/',
         output: 'main.min.js',

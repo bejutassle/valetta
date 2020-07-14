@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'HomeController@index');
-Route::get('/{query}/{section}', 'HomeController@show');
+Route::get('show', 'HomeController@show');
 Route::get('/likes/{id}/', 'HomeController@likes');
