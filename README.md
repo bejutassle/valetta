@@ -1,4 +1,4 @@
-# Foursquare is Valetta
+# Foursquare is Valletta
 **Backend**: PHP 7.3<br>
 **Backend Framework**: Laravel Framework 7.19.1<br>
 **Frontend**: bower package and my custom SASS frontend theme / jQuery, bootstrap js and waypoints<br>
